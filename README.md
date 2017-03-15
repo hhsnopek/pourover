@@ -25,6 +25,8 @@ PourOver is built around the ideal of simple queries that can be arbitrarily com
 Visit [the PourOver homepage on Github pages](http://nytimes.github.io/pourover) for more info.
 
 ## Usage
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/hhsnopek/pourover.svg)](https://greenkeeper.io/)
 Install through preferred package manager:
 - npm: `npm install pourover`
 - bower: `bower install pourover`
