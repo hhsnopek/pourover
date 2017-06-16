@@ -437,7 +437,7 @@ describe('Sorts', function() {
       this.collection = new PourOver.Collection([{gender: "boy", name: "Erik", age: 26, color: "red"},{gender: "boy", name:"Bart", age: 100, color: "dead"},{name: "Cindy", age: 10, color: "blue", gender: "girl"},{gender: "girl", name:"Sandra", age: 70, color: "purple"}, {gender: "boy", name:"Cargo", age: 10, color: "gold"} ]);
       this.collection.addFilters([PourOver.makeExactFilter("gender", ["boy","girl"])]);
       this.collection.addSort(new age_sort("age"));
-      this.output = _.pluck(this.collection.getSortedItems("age"), "cid");
+      this.output = _.map(this.collection.getSortedItems("age"), "cid");
       this.expected = [2,4,0,3,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -464,7 +464,7 @@ describe('Views', function() {
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -476,7 +476,7 @@ describe('Views', function() {
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
       this.view.page(1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [2,3];
       this.output.should.deep.equal(this.expected);
     });
@@ -489,7 +489,7 @@ describe('Views', function() {
       this.view.setPageSize(2);
       this.view.page(1);
       this.view.page(-1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -503,7 +503,7 @@ describe('Views', function() {
       this.view.page(1);
       this.view.page(-1);
       this.view.page(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [4];
       this.output.should.deep.equal(this.expected);
     });
@@ -518,7 +518,7 @@ describe('Views', function() {
       this.view.page(-1);
       this.view.page(2);
       this.view.page(1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [4];
       this.output.should.deep.equal(this.expected);
     });
@@ -532,7 +532,7 @@ describe('Views', function() {
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -544,7 +544,7 @@ describe('Views', function() {
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
       this.view.setPage(0);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -557,7 +557,7 @@ describe('Views', function() {
       this.view.setPageSize(2);
       this.view.setPage(0);
       this.view.setPage(1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [2,3];
       this.output.should.deep.equal(this.expected);
     });
@@ -571,7 +571,7 @@ describe('Views', function() {
       this.view.setPage(0);
       this.view.setPage(1);
       this.view.setPage(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [4];
       this.output.should.deep.equal(this.expected);
     });
@@ -584,7 +584,7 @@ describe('Views', function() {
       this.collection.addFilters([PourOver.makeExactFilter("gender", ["boy","girl"])]);
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1,2,3,4];
       this.output.should.deep.equal(this.expected);
     });
@@ -595,7 +595,7 @@ describe('Views', function() {
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
       this.view.setSort("age");
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [2,4,0,3,1];
       this.output.should.deep.equal(this.expected);
     });
