@@ -1,5 +1,5 @@
 var should = require('chai').should();
-var _ = require('underscore');
+var _ = require('lodash');
 var PourOver = require('../');
 
 describe('Basic Operations', function() {

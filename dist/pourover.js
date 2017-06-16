@@ -1,9 +1,9 @@
 
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(["underscore"], factory);
+    define(["lodash"], factory);
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('underscore'));
+    module.exports = factory(require('lodash'));
   } else {
     root.PourOver = factory(root._);
   }
