@@ -567,7 +567,7 @@ var PourOver = (function() {
         }
       } else {
         while (low < high && lc < hc) {
-          if (_.include(vals, (i = items[low])[attr_name])) {
+          if (_.includes(vals, (i = items[low])[attr_name])) {
             output.push(i);
             vals = _.without(vals, i[attr_name]);
             low++;
@@ -681,7 +681,7 @@ var PourOver = (function() {
           oldi = 0,
           delete_cids = _.map(i, "cid");
         while (oldi < old_length && delete_cids.length > 0) {
-          if (_.include(delete_cids, old_items[oldi].cid)) {
+          if (_.includes(delete_cids, old_items[oldi].cid)) {
 
           } else {
             new_items.push(old_items[oldi]);
@@ -2285,7 +2285,7 @@ var PourOver = (function() {
       }
       var attrs = _.map(items, this.attr);
       this.order = _.map(this.order, function(o) {
-        return _.include(attrs, o) ? null : o;
+        return _.includes(attrs, o) ? null : o;
       });
       this.insert(items, index);
       this.order = _.compact(this.order);
