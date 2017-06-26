@@ -2159,10 +2159,11 @@ var PourOver = (function() {
   // to range[0] and less than range[1].
   PourOver.continuousRangeFilter = PourOver.Filter.extend({
     cacheResults: function(items) {
+      var self = this;
       this.values = _.map(items, function(i) {
         return {
           cid: i.cid,
-          val: i[this.name]
+          val: i[self.name]
         };
       }, this);
       this.values.sort(function(a, b) {
