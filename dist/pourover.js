@@ -1438,7 +1438,7 @@ var PourOver = (function() {
           });
           var unsorted_items = this.collection.get(ordered_cids);
           items = _.map(items, function(i) {
-            return _.findWhere(unsorted_items, {
+            return _.find(unsorted_items, {
               cid: i
             });
           });
@@ -1548,17 +1548,17 @@ var PourOver = (function() {
         };
       if (typeof(operation) === "object") {
         match_set = operation.getFn(step[1]);
-        return this.refresh(_.rest(s), match_set);
+        return this.refresh(_.drop(s), match_set);
       } else if (operation === "all" || step === "all") {
         var cids = _.map(this.collection.items, "cid");
         match_set = new PourOver.MatchSet(cids, this, ["all"]);
-        return this.refresh(_.rest(s), match_set);
+        return this.refresh(_.drop(s), match_set);
       } else if (is_compound(operation)) {
         var m = match_set[operation](this.refresh(step[1]));
       } else {
         var m = this.refresh(step[1]);
       }
-      return this.refresh(_.rest(s), m);
+      return this.refresh(_.drop(s), m);
     },
 
     // Intersect this MatchSet with another MatchSet.
@@ -1692,10 +1692,10 @@ var PourOver = (function() {
         return output;
       } else if (typeof(s[0][0]) === "object") {
         output.push(s[0][1]);
-        return this.getSimpleSelectState(match_set, _.rest(s), output);
+        return this.getSimpleSelectState(match_set, _.drop(s), output);
       } else if (s[0][0] === "or") {
         output = output.concat(this.getSimpleSelectState(match_set, s[0][1]));
-        return this.getSimpleSelectState(match_set, _.rest(s), output);
+        return this.getSimpleSelectState(match_set, _.drop(s), output);
       } else {
         throw "This does not appear to be a valid, simple selectElement stack.";
       }
@@ -1714,10 +1714,10 @@ var PourOver = (function() {
         return output;
       } else if (typeof(s[0][0]) === "object") {
         output.push(s[0][1]);
-        return this.getIntersectedSelectState(match_set, _.rest(s), output);
+        return this.getIntersectedSelectState(match_set, _.drop(s), output);
       } else if (s[0][0] === "and") {
         output = output.concat(this.getIntersectedSelectState(match_set, s[0][1]));
-        return this.getIntersectedSelectState(match_set, _.rest(s), output);
+        return this.getIntersectedSelectState(match_set, _.drop(s), output);
       } else {
         throw "This does not appear to be a valid, simple selectElement stack.";
       }
