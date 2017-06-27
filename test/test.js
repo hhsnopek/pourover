@@ -824,7 +824,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.unionQuery(["blue","blue"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.output = _.any(this.items, function(i){ return i.color == "blue"; });
+      this.output = _.some(this.items, function(i){ return i.color == "blue"; });
       this.output.should.equal(true);
     });
     it('should refresh unioned queries', function() {
@@ -880,7 +880,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.intersectQuery(["red","red"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.output = _.any(this.items, function(i){ return i.color == "red"; });
+      this.output = _.some(this.items, function(i){ return i.color == "red"; });
       this.output.should.equal(true);
     });
     it('should refresh successfuly', function() {
@@ -898,7 +898,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.intersectQuery(["red","red"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.change_item = _.findWhere(this.c.items,{color:"blue"});
+      this.change_item = _.find(this.c.items,{color:"blue"});
       this.c.updateItem(this.change_item.cid,"color","red");
       this.final_length = this.c.filters.color.current_query.cids.length;
       this.final_length.should.equal(this.new_length + 1);
@@ -936,7 +936,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.subtractQuery(["orange","orange"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.output = _.any(this.items,function(i){ return i.color == "orange" || i.color == "blue" || i.color == "indigo" || i.color == "violet"; });
+      this.output = _.some(this.items,function(i){ return i.color == "orange" || i.color == "blue" || i.color == "indigo" || i.color == "violet"; });
       this.output.should.equal(false);
     });
     it('should successfully refresh', function() {
@@ -954,7 +954,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.subtractQuery(["orange","orange"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.change_item = _.findWhere(this.c.items,{color:"red"});
+      this.change_item = _.find(this.c.items,{color:"red"});
       this.c.updateItem(this.change_item.cid,"color","violet");
       this.final_length = this.c.filters.color.current_query.cids.length;
       this.new_length.should.equal(this.final_length + 1);
