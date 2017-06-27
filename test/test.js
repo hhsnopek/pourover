@@ -1,5 +1,5 @@
 var should = require('chai').should();
-var _ = require('underscore');
+var _ = require('lodash');
 var PourOver = require('../');
 
 describe('Basic Operations', function() {
@@ -437,7 +437,7 @@ describe('Sorts', function() {
       this.collection = new PourOver.Collection([{gender: "boy", name: "Erik", age: 26, color: "red"},{gender: "boy", name:"Bart", age: 100, color: "dead"},{name: "Cindy", age: 10, color: "blue", gender: "girl"},{gender: "girl", name:"Sandra", age: 70, color: "purple"}, {gender: "boy", name:"Cargo", age: 10, color: "gold"} ]);
       this.collection.addFilters([PourOver.makeExactFilter("gender", ["boy","girl"])]);
       this.collection.addSort(new age_sort("age"));
-      this.output = _.pluck(this.collection.getSortedItems("age"), "cid");
+      this.output = _.map(this.collection.getSortedItems("age"), "cid");
       this.expected = [2,4,0,3,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -464,7 +464,7 @@ describe('Views', function() {
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -476,7 +476,7 @@ describe('Views', function() {
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
       this.view.page(1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [2,3];
       this.output.should.deep.equal(this.expected);
     });
@@ -489,7 +489,7 @@ describe('Views', function() {
       this.view.setPageSize(2);
       this.view.page(1);
       this.view.page(-1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -503,7 +503,7 @@ describe('Views', function() {
       this.view.page(1);
       this.view.page(-1);
       this.view.page(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [4];
       this.output.should.deep.equal(this.expected);
     });
@@ -518,7 +518,7 @@ describe('Views', function() {
       this.view.page(-1);
       this.view.page(2);
       this.view.page(1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [4];
       this.output.should.deep.equal(this.expected);
     });
@@ -532,7 +532,7 @@ describe('Views', function() {
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -544,7 +544,7 @@ describe('Views', function() {
       this.view = new PourOver.View("default", this.collection);
       this.view.setPageSize(2);
       this.view.setPage(0);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -557,7 +557,7 @@ describe('Views', function() {
       this.view.setPageSize(2);
       this.view.setPage(0);
       this.view.setPage(1);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [2,3];
       this.output.should.deep.equal(this.expected);
     });
@@ -571,7 +571,7 @@ describe('Views', function() {
       this.view.setPage(0);
       this.view.setPage(1);
       this.view.setPage(2);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [4];
       this.output.should.deep.equal(this.expected);
     });
@@ -584,7 +584,7 @@ describe('Views', function() {
       this.collection.addFilters([PourOver.makeExactFilter("gender", ["boy","girl"])]);
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [0,1,2,3,4];
       this.output.should.deep.equal(this.expected);
     });
@@ -595,7 +595,7 @@ describe('Views', function() {
       this.collection.addSort(new age_sort("age"));
       this.view = new PourOver.View("default", this.collection);
       this.view.setSort("age");
-      this.output = _.pluck(this.view.getCurrentItems(), "cid");
+      this.output = _.map(this.view.getCurrentItems(), "cid");
       this.expected = [2,4,0,3,1];
       this.output.should.deep.equal(this.expected);
     });
@@ -824,7 +824,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.unionQuery(["blue","blue"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.output = _.any(this.items, function(i){ return i.color == "blue"; });
+      this.output = _.some(this.items, function(i){ return i.color == "blue"; });
       this.output.should.equal(true);
     });
     it('should refresh unioned queries', function() {
@@ -880,7 +880,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.intersectQuery(["red","red"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.output = _.any(this.items, function(i){ return i.color == "red"; });
+      this.output = _.some(this.items, function(i){ return i.color == "red"; });
       this.output.should.equal(true);
     });
     it('should refresh successfuly', function() {
@@ -898,7 +898,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.intersectQuery(["red","red"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.change_item = _.findWhere(this.c.items,{color:"blue"});
+      this.change_item = _.find(this.c.items,{color:"blue"});
       this.c.updateItem(this.change_item.cid,"color","red");
       this.final_length = this.c.filters.color.current_query.cids.length;
       this.final_length.should.equal(this.new_length + 1);
@@ -936,7 +936,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.subtractQuery(["orange","orange"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.output = _.any(this.items,function(i){ return i.color == "orange" || i.color == "blue" || i.color == "indigo" || i.color == "violet"; });
+      this.output = _.some(this.items,function(i){ return i.color == "orange" || i.color == "blue" || i.color == "indigo" || i.color == "violet"; });
       this.output.should.equal(false);
     });
     it('should successfully refresh', function() {
@@ -954,7 +954,7 @@ describe('Stateful queries', function() {
       this.c.filters.color.subtractQuery(["orange","orange"]);
       this.new_length = this.c.filters.color.current_query.cids.length;
       this.items = this.c.get(this.c.filters.color.current_query.cids);
-      this.change_item = _.findWhere(this.c.items,{color:"red"});
+      this.change_item = _.find(this.c.items,{color:"red"});
       this.c.updateItem(this.change_item.cid,"color","violet");
       this.final_length = this.c.filters.color.current_query.cids.length;
       this.new_length.should.equal(this.final_length + 1);

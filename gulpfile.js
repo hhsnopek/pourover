@@ -16,7 +16,7 @@ gulp.task('umd', ['clean'], function(file) {
         	namespace: 'PourOver',
             exports: 'PourOver',
             deps: [{
-                name: 'underscore',
+                name: 'lodash',
                 globalName: '_',
                 paramName: '_'
             }]

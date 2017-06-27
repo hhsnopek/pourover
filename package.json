@@ -8,7 +8,7 @@
     "url": "git@github.com/hhsnopek/pourover.git"
   },
   "dependencies": {
-    "underscore": "^1.6.0"
+    "lodash": "^4.17.4"
   },
   "scripts": {
     "build": "gulp",
